@@ -28,46 +28,24 @@ for link in full_urls:
   page0 = rq.get(url0)
   soup0 = BeautifulSoup(page0.text, features="html.parser")
 
-for link in full_urls:
-  url1 = full_urls[1]
-  page1 = rq.get(url1)
-  soup1 = BeautifulSoup(page1.text, features="html.parser")
-
-for link in full_urls:
-  url2 = full_urls[2]
-  page2 = rq.get(url2)
-  soup2 = BeautifulSoup(page2.text, features="html.parser")
-
-for link in full_urls:
-  url3 = full_urls[3]
-  page3 = rq.get(url3)
-  soup3 = BeautifulSoup(page3.text, features="html.parser")
-
 articles0 = []
 for link in soup0.find_all('a', href=True):
   if 'articles' in link.get('href') or 'columns' in link.get('href') and link.get('href') not in articles0:
       articles0.append(link.get('href'))
 
-articles1 = []
-for link in soup1.find_all('a', href=True):
-  if 'articles' in link.get('href') or 'columns' in link.get('href') and link.get('href') not in articles1:
-      articles1.append(link.get('href'))
-
-articles2 = []
-for link in soup2.find_all('a', href=True):
-  if 'articles' in link.get('href') or 'columns' in link.get('href') and link.get('href') not in articles2:
-      articles2.append(link.get('href'))
-
-articles3 = []
-for link in soup3.find_all('a', href=True):
-  if 'articles' in link.get('href') or 'columns' in link.get('href') and link.get('href') not in articles3:
-      articles3.append(link.get('href'))
+def AL(url0):
+  page0 = rq.get(url0)
+  soup0 = BeautifulSoup(page0.text, features="html.parser")
+  articles0 = []
+  for link in soup0.find_all('a', href=True):
+    if 'articles' in link.get('href') or 'columns' in link.get('href') and link.get('href') not in articles0:
+      articles0.append(link.get('href'))  
+  return articles0
 
 all_articles = []
-all_articles.extend(articles0)
-all_articles.extend(articles1)
-all_articles.extend(articles2)
-all_articles.extend(articles3)
+for link in full_urls:
+  articles = AL(link)
+  all_articles.extend(articles)
 
 full_artricles = []
 for i in all_articles:
